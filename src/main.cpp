@@ -507,29 +507,6 @@ void generatePacketInfo(TriggersCollection& userTriggers, vector<Packet>& myPack
 	}
 }
 
-void StartupUDP()
-{
-	// initialise winsock
-	WSADATA ws;
-	logger::info("Initialising Winsock...");
-	if (WSAStartup(MAKEWORD(2, 2), &ws) != 0) {
-		logger::error("Failed. Error Code: %d", WSAGetLastError());
-	}
-	logger::info("Initialised.\n");
-	// create socket
-
-	if ((mysocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == SOCKET_ERROR)  // <<< UDP socket
-	{
-		logger::error("socket() failed with error code: %d", WSAGetLastError());
-	}
-
-	// setup address structure
-	memset((char*)&server, 0, sizeof(server));
-	server.sin_family = AF_INET;
-	server.sin_port = htons(PORT);
-	server.sin_addr.S_un.S_addr = inet_addr(SERVER);
-}
-
 #pragma warning(pop)
 
 void background(std::chrono::milliseconds interval)
@@ -889,7 +866,7 @@ extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Load(const F4SE::LoadInterface* a_f
 
 
 	logger::info("Starting up UDP"sv);
-	StartupUDP();
+	UDPStart();
 
 	logger::info("Starting up Background Trigger Applier"sv);
 	auto interval = std::chrono::milliseconds(100);
