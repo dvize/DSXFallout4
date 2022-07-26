@@ -639,20 +639,23 @@ void UDPStart()
 										actionLeft = PacketToString(myPackets.at(10));   //aim
 										actionRight = PacketToString(myPackets.at(11));  //vibrating trigger
 										logger::info(FMT_STRING("Loading is Automatic Settings: {}"), isAutomatic);
-									} else if (isBoltAction) {
+									} 
+									else if (isBoltAction) {
 										actionLeft = PacketToString(myPackets.at(14));   //aim
 										actionRight = PacketToString(myPackets.at(15));  //vibrating trigger
 										logger::info(FMT_STRING("Loading is Bolt Action Settings: {}"), isBoltAction);
 									}
-									if (isChargingAttack) {
+									else if (isChargingAttack) {
 										actionLeft = PacketToString(myPackets.at(12));   //aim
 										actionRight = PacketToString(myPackets.at(13));  //vibrating trigger
 										logger::info(FMT_STRING("Loading Hold Input To PowerAttack Settings: {}"), isChargingAttack);
-									} else if (isHoldInputToPower) {
+									} 
+									else if (isHoldInputToPower) {
 										actionLeft = PacketToString(myPackets.at(16));   //aim
 										actionRight = PacketToString(myPackets.at(17));  //vibrating trigger
 										logger::info(FMT_STRING("Loading Hold Input To PowerAttack Settings: {}"), isHoldInputToPower);
-									} else {
+									} 
+									else {
 										actionLeft = PacketToString(myPackets.at(18));   //aim
 										actionRight = PacketToString(myPackets.at(19));  //any other gun trigger (shotguns)
 										logger::info("Loading Regular Gun Settings");
