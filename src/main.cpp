@@ -212,41 +212,6 @@ Packet StringToPacket(json j)
 }
 
 
-struct TECrapEvent
-{
-	NiPoint3 hitPos;                              //0x0000
-	uint32_t unk_0C;                              //0x000C
-	NiPoint3 normal;                              //0x0010
-	uint32_t unk_1C;                              //0x001C
-	NiPoint3 normal2;                             //0x0020 melee hits return 0,0,0
-	uint32_t unk_2C;                              //0x002C
-	bhkNPCollisionObject* colObj;                 //0x0030
-	char pad_0x0038[0x18];                        //0x0038
-	BGSAttackData* attackData;                    //0x0050
-	TESObjectWEAP* weapon;                        //0x0058
-	TESObjectWEAP::InstanceData* weaponInstance;  //0x0060
-	char pad_0x0068[0x18];                        //0x0068
-	TESForm* unkitem;                             //0x0080
-	char pad_0x0088[0x8];                         //0x0088
-	float unk90;                                  //0x0090
-	float unk94;                                  //0x0094
-	float unk98;                                  //0x0098
-	float unk9C;                                  //0x009C
-	char pad_0x00A0[0x10];                        //0x00A0
-	float unkB0;                                  //0x00B0
-	float unkB4;                                  //0x00B4
-	char pad_0x00B8[0x8];                         //0x00B8
-	float unkC0;                                  //0x00C0
-	char pad_0x00C4[0xC];                         //0x00C4
-	uint32_t bodypart;                            //0x00D0
-	char pad_0x00D4[0x4C];                        //0x00D4
-	TESObjectREFR* victim;                        //0x0120
-	char pad_0x0128[0x38];                        //0x0128
-	TESObjectREFR* attacker;                      //0x0160
-};
-
-
-
 #pragma endregion
 
 
@@ -278,55 +243,6 @@ char* _MESSAGE(const char* fmt, ...)
 	spdlog::log(spdlog::level::warn, tempbuf);
 
 	return tempbuf;
-}
-
-TESForm* GetFormFromMod(std::string modname, uint32_t formid)
-{
-	if (!modname.length() || !formid)
-		return nullptr;
-	TESDataHandler* dh = TESDataHandler::GetSingleton();
-	TESFile* modFile = nullptr;
-	for (auto it = dh->files.begin(); it != dh->files.end(); ++it) {
-		TESFile* f = *it;
-		if (strcmp(f->filename, modname.c_str()) == 0) {
-			modFile = f;
-			break;
-		}
-	}
-	if (!modFile)
-		return nullptr;
-	uint8_t modIndex = modFile->compileIndex;
-	uint32_t id = formid;
-	if (modIndex < 0xFE) {
-		id |= ((uint32_t)modIndex) << 24;
-	} else {
-		uint16_t lightModIndex = modFile->smallFileCompileIndex;
-		if (lightModIndex != 0xFFFF) {
-			id |= 0xFE000000 | (uint32_t(lightModIndex) << 12);
-		}
-	}
-	return TESForm::GetFormByID(id);
-}
-
-ActorValueInfo* GetAVIFByEditorID(std::string editorID)
-{
-	TESDataHandler* dh = TESDataHandler::GetSingleton();
-	BSTArray<ActorValueInfo*> avifs = dh->GetFormArray<ActorValueInfo>();
-	for (auto it = avifs.begin(); it != avifs.end(); ++it) {
-		if (strcmp((*it)->formEditorID.c_str(), editorID.c_str()) == 0) {
-			return (*it);
-		}
-	}
-	return nullptr;
-}
-
-bool CheckPowerArmor(Actor* a)
-{
-	if (!a->extraList) {
-		return false;
-	}
-	return a->extraList->HasType(EXTRA_DATA_TYPE::kPowerArmor);
-	;
 }
 
 #pragma warning(push)
