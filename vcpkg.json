@@ -1,15 +1,30 @@
 {
-  "name": "exampleproject",
-  "version-string": "1.0.0",
-  "description": "An example project built using CommonLibF4",
-  "homepage": "https://github.com/Ryan-rsm-McKenzie/CommonLibF4",
-  "license": "MIT",
+  "name": "dsxfallout4ng",
+  "version-semver": "1.4.0",
   "dependencies": [
-    "boost-stl-interfaces",
     "fmt",
-    "rm-mmio",
-	"magic-enum",
-	"nlohmann-json",
-    "spdlog"
+    "magic-enum",
+    "nlohmann-json",
+    "spdlog",
+    "tomlplusplus",
+	"rsm-mmio",
+	"boost-algorithm",
+    "boost-container",
+    "boost-nowide",
+    "boost-stacktrace",
+    "boost-stl-interfaces",
+	"rsm-binary-io",
+	"frozen",
+	{
+      "name": "infoware",
+      "features": ["d3d"]
+    },
+	"robin-hood-hashing",
+	"tbb",
+	"xbyak",
+	"zycore",
+    "zydis",
+	"openvr",
+	"rapidcsv"
   ]
 }

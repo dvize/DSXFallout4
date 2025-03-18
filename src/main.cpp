@@ -1,822 +1,259 @@
+#include <f4se/Version.h>
+#include <f4se/API.h>
+#include <spdlog/spdlog.h>
+#include <thread>
+#include <mutex>
+#include <chrono>
+#include <fstream>
+#include <algorithm>
+#include <vector>
+#include <string>
+#include <nlohmann/json.hpp>
+
 #include "PCH.h"
 #include "RE/Fallout.h"
-#include "PCH.h"
-#include <nlohmann/json.hpp>
-#include <ObjectArray.h>
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <spdlog/spdlog.h>
-#include <chrono>
-#include <thread>
-
-
-#define SERVER "127.0.0.1"  // or "localhost" - ip address of UDP server
-#define BUFLEN 512          // max length of answer
-#define PORT 6969           // the port on which to listen for incoming data
-
-using std::string;
-using std::vector;
-using json = nlohmann::json;
-using namespace RE;
-
-#pragma warning(push)
-#pragma warning(disable: 4189)
-
-
-#pragma region Global Classes
-
-class TriggerSetting
-{
-    private:
-    public:
-	    string name;
-	    string category;
-		string formID;
-	    string description;
-	    int triggerSide;
-	    int triggerType;
-	    int customTriggerMode;
-	    int playerLEDNewRev;
-	    int micLEDMode;
-	    int triggerThresh;
-	    int controllerIndex;
-	    vector<int> triggerParams;
-	    vector<int> rgbUpdate;
-	    vector<bool> playerLED;
-
-	    TriggerSetting()
-	    {
-		    controllerIndex = 0;
-		    name = "Default";
-			formID = "";
-		    category = "One-Handed Bow";
-		    description = "Drawing Hand";
-		    triggerSide = 2;
-		    triggerType = 14;
-		    customTriggerMode = 0;
-		    triggerParams = { 0, 8, 2, 5 };
-		    rgbUpdate = { 0, 0, 0 };
-		    playerLED = { false, false, false, false, false };
-		    playerLEDNewRev = 5;
-		    micLEDMode = 2;
-		    triggerThresh = 0;
-	    }
-};
-
-class Instruction
-{
-    public:
-	    int type;
-	    vector<string> parameters;
-
-	    Instruction()
-	    {
-		    type = 1;
-		    parameters = {};
-	    }
-};
-
-class Packet
-{
-    public:
-	    Instruction instructions[6];
-
-	    Packet()
-	    {
-		    instructions[0].type = 1;
-		    instructions[0].parameters = {};
-
-		    instructions[1].type = 4;
-		    instructions[1].parameters = {};
-
-		    instructions[2].type = 2;
-		    instructions[2].parameters = {};
-
-		    instructions[3].type = 3;
-		    instructions[3].parameters = {};
-
-		    instructions[4].type = 6;
-		    instructions[4].parameters = {};
-
-		    instructions[5].type = 5;
-		    instructions[5].parameters = {};
-	    }
-};
-
-class TriggersCollection
-{
-    public:
-	    vector<TriggerSetting> TriggersList;
-};
-
-json to_json(json& j, const TriggerSetting& p)
-{
-	j = {
-		{ "Name", p.name },
-		{ "Category", p.category },
-		{ "CustomFormID", p.formID },
-		{ "Description", p.description },
-		{ "TriggerSide", p.triggerSide },
-		{ "TriggerType", p.triggerType },
-		{ "customTriggerMode", p.customTriggerMode },
-		{ "playerLEDNewRev", p.playerLEDNewRev },
-		{ "MicLEDMode", p.micLEDMode },
-		{ "TriggerThreshold", p.triggerThresh },
-		{ "ControllerIndex", p.controllerIndex },
-		{ "TriggerParams", p.triggerParams },
-		{ "RGBUpdate", p.rgbUpdate },
-		{ "PlayerLED", p.playerLED }
-	};
-
-	return j;
-}
-
-void from_json(const json& j, TriggerSetting& p)
-{
-	j.at("Name").get_to(p.name);
-	j.at("Category").get_to(p.category);
-	j.at("CustomFormID").get_to(p.formID);
-	j.at("Description").get_to(p.description);
-	j.at("TriggerSide").get_to(p.triggerSide);
-	j.at("TriggerType").get_to(p.triggerType);
-	j.at("customTriggerMode").get_to(p.customTriggerMode);
-	j.at("playerLEDNewRev").get_to(p.playerLEDNewRev);
-	j.at("MicLEDMode").get_to(p.micLEDMode);
-	j.at("TriggerThreshold").get_to(p.triggerThresh);
-	j.at("ControllerIndex").get_to(p.controllerIndex);
-	j.at("TriggerParams").get_to(p.triggerParams);
-	j.at("RGBUpdate").get_to(p.rgbUpdate);
-	j.at("PlayerLED").get_to(p.playerLED);
-}
-
-void to_json(json& j, const Instruction& p)
-{
-	j = {
-		{ "type", p.type },
-		{ "parameters", p.parameters }
-
-	};
-}
-
-void from_json(const json& j, Instruction& p)
-{
-	j.at("type").get_to(p.type);
-	j.at("parameters").get_to(p.parameters);
-}
-
-void to_json(json& j, const Packet& p)
-{
-	j = {
-		{ "instructions", p.instructions }
-
-	};
-}
-
-void from_json(const json& j, Packet& p)
-{
-	j.at("instructions").get_to(p.instructions);
-}
-
-void ReplaceStringInPlace(std::string& subject, const std::string& search,
-	const std::string& replace)
-{
-	size_t pos = 0;
-	while ((pos = subject.find(search, pos)) != std::string::npos) {
-		subject.replace(pos, search.length(), replace);
-		pos += replace.length();
-	}
-}
-
-json PacketToString(Packet& packet)
-{
-	logger::info("PacketToString function called");
-
-	json j = packet;
-	std::string s = j.dump();
-
-	ReplaceStringInPlace(s, "\"", "");                            //removed from all to clear ints
-	ReplaceStringInPlace(s, "instructions", "\"instructions\"");  // add back for instructions
-	ReplaceStringInPlace(s, "type", "\"type\"");                  // add back for type
-	ReplaceStringInPlace(s, "parameters", "\"parameters\"");
-
-	return s;  //what is packet data structure with wierd names?
-}
-
-
-Packet StringToPacket(json j)
-{
-	logger::info("StringToPacket function called");
-	auto conversion = j.get<Packet>();
-	return conversion;
-}
-
-
-#pragma endregion
-
-
-#pragma region GlobalVariables
-
-PlayerCharacter* player;
-std::unordered_map<TESAmmo*, bool> ammoWhitelist;
-using socket_t = decltype(socket(0, 0, 0));
-socket_t mysocket;
-sockaddr_in server;
-TriggersCollection userTriggers;
-vector<Packet> myPackets;
-string actionLeft;
-string actionRight;
-const auto unequipped = 0x00000000ff000000;
-
-#pragma endregion
-
-#pragma region Utilities
-
-char tempbuf[8192] = { 0 };
-char* _MESSAGE(const char* fmt, ...)
-{
-	va_list args;
-
-	va_start(args, fmt);
-	vsnprintf(tempbuf, sizeof(tempbuf), fmt, args);
-	va_end(args);
-	spdlog::log(spdlog::level::warn, tempbuf);
-
-	return tempbuf;
-}
-
-#pragma warning(push)
-#pragma warning(disable: 4267)
-#pragma warning(disable: 4459)
-
-void sendToDSX(string& s)
-{
-	//convert json to string and then char array
-	char message[512];
-	strcpy_s(message, s.c_str());
-	for (int i = s.size(); i < 512; i++) {
-		message[i] = '\0';
-	}
-
-	// send the message
-	if (sendto(mysocket, message, strlen(message), 0, (sockaddr*)&server, sizeof(sockaddr_in)) == SOCKET_ERROR) {
-		logger::error("sendtodsx() failed with error code: %d", WSAGetLastError());
-	}
-}
-
-void readFromConfig()
-{
-	try {
-		json j;
-		std::ifstream stream(".\\Data\\F4SE\\Plugins\\DSXFallout4\\DSXFallout4Config.json");
-		stream >> j;
-		logger::info("JSON File Read from location");
-
-		logger::info("Try assign j");
-
-		TriggerSetting conversion;
-
-		for (int i = 0; i < j.size(); i++) {
-			conversion = j.at(i).get<TriggerSetting>();
-			userTriggers.TriggersList.push_back(conversion);
-		}
-
-		logger::info("Breakpoint here to check value of userTriggers");
-
-	} catch (std::exception e) {
-		throw e;
-	}
-}
-
-inline void writeToConfig(json j)
-{
-	try {
-
-		const char* path = ".\\Data\\SKSE\\Plugins\\DSXSkyrim\\TestJson23.json";
-
-		std::ofstream file_ofstream(path);
-		file_ofstream << j.dump(4) << std::endl;
-
-	} catch (std::exception& e) {
-		logger::debug(FMT_STRING("Exception thrown :  {}"), e.what());
-	}
-	logger::info("JSON File Written and Closed Supposedly");
-}
-
-void setInstructionParameters(TriggerSetting& TempTrigger, Instruction& TempInstruction)
-{
-	switch (TempInstruction.type) {
-	case 1:  //TriggerUpdate
-		switch (TempTrigger.triggerParams.size()) {
-		case 0:
-			TempInstruction.parameters = { std::to_string(TempTrigger.controllerIndex), std::to_string(TempTrigger.triggerSide),
-				std::to_string(TempTrigger.triggerType) };
-			break;
-
-		case 1:
-			TempInstruction.parameters = { std::to_string(TempTrigger.controllerIndex), std::to_string(TempTrigger.triggerSide), std::to_string(TempTrigger.triggerType),
-				std::to_string(TempTrigger.triggerParams.at(0)) };
-			break;
-
-		case 2:
-			TempInstruction.parameters = { std::to_string(TempTrigger.controllerIndex), std::to_string(TempTrigger.triggerSide), std::to_string(TempTrigger.triggerType),
-				std::to_string(TempTrigger.triggerParams.at(0)), std::to_string(TempTrigger.triggerParams.at(1)) };
-			break;
-
-		case 3:
-			TempInstruction.parameters = { std::to_string(TempTrigger.controllerIndex), std::to_string(TempTrigger.triggerSide), std::to_string(TempTrigger.triggerType),
-				std::to_string(TempTrigger.triggerParams.at(0)), std::to_string(TempTrigger.triggerParams.at(1)),
-				std::to_string(TempTrigger.triggerParams.at(2)) };
-			break;
-
-		case 4:
-			TempInstruction.parameters = { std::to_string(TempTrigger.controllerIndex), std::to_string(TempTrigger.triggerSide), std::to_string(TempTrigger.triggerType),
-				std::to_string(TempTrigger.triggerParams.at(0)), std::to_string(TempTrigger.triggerParams.at(1)),
-				std::to_string(TempTrigger.triggerParams.at(2)), std::to_string(TempTrigger.triggerParams.at(3)) };
-			break;
-
-		case 5:
-			TempInstruction.parameters = { std::to_string(TempTrigger.controllerIndex), std::to_string(TempTrigger.triggerSide), std::to_string(TempTrigger.triggerType),
-				std::to_string(TempTrigger.triggerParams.at(0)), std::to_string(TempTrigger.triggerParams.at(1)),
-				std::to_string(TempTrigger.triggerParams.at(2)), std::to_string(TempTrigger.triggerParams.at(3)),
-				std::to_string(TempTrigger.triggerParams.at(4)) };
-			break;
-
-		case 6:
-			TempInstruction.parameters = { std::to_string(TempTrigger.controllerIndex), std::to_string(TempTrigger.triggerSide), std::to_string(TempTrigger.triggerType),
-				std::to_string(TempTrigger.triggerParams.at(0)), std::to_string(TempTrigger.triggerParams.at(1)),
-				std::to_string(TempTrigger.triggerParams.at(2)), std::to_string(TempTrigger.triggerParams.at(3)),
-				std::to_string(TempTrigger.triggerParams.at(4)), std::to_string(TempTrigger.triggerParams.at(5)) };
-			break;
-
-		case 7:
-			if (TempTrigger.triggerType == 12) {
-				TempInstruction.parameters = { std::to_string(TempTrigger.controllerIndex), std::to_string(TempTrigger.triggerSide), std::to_string(TempTrigger.triggerType),
-					std::to_string(TempTrigger.customTriggerMode), std::to_string(TempTrigger.triggerParams.at(0)), std::to_string(TempTrigger.triggerParams.at(1)),
-					std::to_string(TempTrigger.triggerParams.at(2)), std::to_string(TempTrigger.triggerParams.at(3)),
-					std::to_string(TempTrigger.triggerParams.at(4)), std::to_string(TempTrigger.triggerParams.at(5)),
-					std::to_string(TempTrigger.triggerParams.at(6)) };
+#include "DSXController.hpp"
+#include "EventHandler.h"
+
+std::vector<DSX::TriggerSetting> userTriggers;
+std::vector<DSX::Packet> triggerPackets;
+DSX::NetworkManager networkManager;
+DSX::Packet lastLeftPacket;
+DSX::Packet lastRightPacket;
+std::string actionLeft;
+std::string actionRight;
+
+namespace {
+    
+    // Forward declarations for F4SE plugin
+    void PostInit();
+    void F4SEAPI MessageHandler(F4SE::MessagingInterface::Message* a_message);
+    
+    // DualSense controller specific functions
+    void InitializeDSX();
+    void BackgroundThread(std::chrono::milliseconds interval);
+    bool LoadTriggerSettings();
+    void GeneratePackets();
+    
+
+    void PostInit() {
+        const auto task = F4SE::GetTaskInterface();
+        task->AddTask([]() {
+            logger::info("DSXFallout4 post-initialization");
+			InitializeDSX();
+        });
+    }
+
+    void F4SEAPI MessageHandler(F4SE::MessagingInterface::Message* a_message)
+	{
+		switch (a_message->type) {
+		case F4SE::MessagingInterface::kGameLoaded:
+			{
+				static std::once_flag guard;
+				std::call_once(guard, PostInit);
 				break;
+			}
+		case F4SE::MessagingInterface::kPostLoadGame:
+			{
+				logger::info("PostLoadGame: Registering handlers and checking weapons");
+				DSX::RegisterEventHandlers();
+				DSX::CheckWeaponOnGameLoad();
+				break;
+			}
+
+		case F4SE::MessagingInterface::kGameDataReady:
+			logger::info("GameDataReady: Registering UI sink");
+			auto* ui = RE::UI::GetSingleton();
+			if (ui) {
+				ui->RegisterSink(DSX::MenuEventHandler::GetSingleton());
+				logger::info("Registered MenuOpenCloseEvent handler");
 			} else {
-				TempInstruction.parameters = { std::to_string(TempTrigger.controllerIndex), std::to_string(TempTrigger.triggerSide), std::to_string(TempTrigger.triggerType),
-					std::to_string(TempTrigger.triggerParams.at(0)), std::to_string(TempTrigger.triggerParams.at(1)),
-					std::to_string(TempTrigger.triggerParams.at(2)), std::to_string(TempTrigger.triggerParams.at(3)),
-					std::to_string(TempTrigger.triggerParams.at(4)), std::to_string(TempTrigger.triggerParams.at(5)),
-					std::to_string(TempTrigger.triggerParams.at(6)) };
-				break;
+				logger::error("Failed to get UI singleton in kGameDataReady");
 			}
-
-		default:
-			TempInstruction.parameters = { std::to_string(TempTrigger.controllerIndex), std::to_string(TempTrigger.triggerSide), std::to_string(TempTrigger.triggerType) };
 			break;
 		}
-		break;
-
-	case 2:  //RGBUpdate
-		TempInstruction.parameters = { std::to_string(TempTrigger.controllerIndex), std::to_string(TempTrigger.rgbUpdate.at(0)),
-			std::to_string(TempTrigger.rgbUpdate.at(1)), std::to_string(TempTrigger.rgbUpdate.at(2)) };
-		break;
-
-	case 3:  //PlayerLED    --- parameters is set to vector<int> so the bool is not coming across. need to fix
-		TempInstruction.parameters = {
-			std::to_string(TempTrigger.controllerIndex), "false", "false", "false", "false", "false"
-		};
-		break;
-
-	case 4:  //TriggerThreshold
-		TempInstruction.parameters = { std::to_string(TempTrigger.controllerIndex), std::to_string(TempTrigger.triggerSide), std::to_string(TempTrigger.triggerThresh) };
-		break;
-
-	case 5:  //InstructionType.MicLED
-		TempInstruction.parameters = { std::to_string(TempTrigger.controllerIndex), std::to_string(TempTrigger.micLEDMode) };
-		break;
-
-	case 6:  //InstructionType.PlayerLEDNewRevision
-		TempInstruction.parameters = { std::to_string(TempTrigger.controllerIndex), std::to_string(TempTrigger.playerLEDNewRev) };
-		break;
 	}
-}
 
-void generatePacketInfo(TriggersCollection& userTriggers, vector<Packet>& myPackets)
-{
-	for (int i = 0; i < userTriggers.TriggersList.size(); i++) {
-		Packet TempPacket;
-		myPackets.push_back(TempPacket);
+    void InitializeDSX() {
+        logger::info("Initializing DSXFallout4");
+        
+        // Initialize network connection
+        if (!networkManager.Initialize()) {
+            logger::error("Failed to initialize network connection");
+            return;
+        }
+        
+        // Load trigger settings from config
+        if (!LoadTriggerSettings()) {
+            logger::error("Failed to load trigger settings");
+            return;
+        }
+        
+        // Generate packets from settings
+        GeneratePackets();
+        
+        // Start background thread for sending controller updates
+        auto interval = std::chrono::milliseconds(10000); // 10 second update interval
+        std::thread backgroundThread(BackgroundThread, interval);
+        backgroundThread.detach();
+        
+        logger::info("DSXFallout4 initialized successfully");
+    }
 
-		myPackets.at(i).instructions[0].type = 1;  //InstructionType.TriggerUpdate
-		setInstructionParameters(userTriggers.TriggersList.at(i), myPackets.at(i).instructions[0]);
+    bool LoadTriggerSettings() {
+        try {
+            std::ifstream stream("./Data/F4SE/Plugins/DSXFallout4Config.json");
+            if (!stream.is_open()) {
+                logger::error("Could not open config file");
+                return false;
+            }
 
-		myPackets.at(i).instructions[2].type = 2;  //InstructionType.RGBUpdate
-		setInstructionParameters(userTriggers.TriggersList.at(i), myPackets.at(i).instructions[2]);
+            nlohmann::json j;
+            stream >> j;
+            userTriggers.clear();
 
-		myPackets.at(i).instructions[3].type = 3;  //InstructionType.PlayerLED - fk this contains bools and mixed int
-		setInstructionParameters(userTriggers.TriggersList.at(i), myPackets.at(i).instructions[3]);
+            for (const auto& item : j) {
+                DSX::TriggerSetting setting;
+                item.at("Name").get_to(setting.name);
+                item.at("Category").get_to(setting.category);
+                item.at("CustomFormID").get_to(setting.formID);
+                item.at("TriggerSide").get_to(setting.triggerSide);
+                item.at("TriggerType").get_to(setting.triggerType);
+                item.at("customTriggerMode").get_to(setting.customTriggerMode);
+                item.at("playerLEDNewRev").get_to(setting.playerLEDNewRev);
+                item.at("MicLEDMode").get_to(setting.micLEDMode);
+                item.at("TriggerThreshold").get_to(setting.triggerThresh);
+                item.at("ControllerIndex").get_to(setting.controllerIndex);
+                item.at("TriggerParams").get_to(setting.triggerParams);
+                item.at("RGBUpdate").get_to(setting.rgbUpdate);
+                userTriggers.push_back(setting);
+            }
 
-		myPackets.at(i).instructions[1].type = 4;  //InstructionType.TriggerThreshold
-		setInstructionParameters(userTriggers.TriggersList.at(i), myPackets.at(i).instructions[1]);
+            logger::info("Loaded {} trigger settings", userTriggers.size());
+            return true;
+        } catch (const std::exception& e) {
+            logger::error("Exception in LoadTriggerSettings: {}", e.what());
+            return false;
+        }
+    }
 
-		myPackets.at(i).instructions[5].type = 5;  //InstructionType.MicLED
-		setInstructionParameters(userTriggers.TriggersList.at(i), myPackets.at(i).instructions[5]);
+    void GeneratePackets() {
+        triggerPackets.clear();
+        
+        for (const auto& trigger : userTriggers) {
+            DSX::Packet packet;
+            
+            if (trigger.triggerType == static_cast<int>(DSX::TriggerMode::CustomTriggerValue)) {
+                packet.AddCustomAdaptiveTrigger(
+                    trigger.controllerIndex,
+                    static_cast<DSX::Trigger>(trigger.triggerSide),
+                    static_cast<DSX::TriggerMode>(trigger.triggerType),
+                    static_cast<DSX::CustomTriggerValueMode>(trigger.customTriggerMode),
+                    trigger.triggerParams
+                );
+            } else {
+                packet.AddAdaptiveTrigger(
+                    trigger.controllerIndex,
+                    static_cast<DSX::Trigger>(trigger.triggerSide),
+                    static_cast<DSX::TriggerMode>(trigger.triggerType),
+                    trigger.triggerParams
+                );
+            }
 
-		myPackets.at(i).instructions[4].type = 6;  //InstructionType.PlayerLEDNewRevision
-		setInstructionParameters(userTriggers.TriggersList.at(i), myPackets.at(i).instructions[4]);
-	}
-}
+            packet.AddTriggerThreshold(
+                trigger.controllerIndex,
+                static_cast<DSX::Trigger>(trigger.triggerSide),
+                trigger.triggerThresh
+            );
 
-#pragma warning(pop)
+            if (!trigger.rgbUpdate.empty()) {
+                packet.AddRGB(
+                    trigger.controllerIndex,
+                    trigger.rgbUpdate[0],
+                    trigger.rgbUpdate[1],
+                    trigger.rgbUpdate[2]
+                );
+            }
 
-void background(std::chrono::milliseconds interval)
-{
-	while (1) {
-		if (!actionLeft.empty()) {
-			sendToDSX(actionLeft);
-		}
-		if (!actionRight.empty()) {
-			sendToDSX(actionRight);
-		}
-		std::this_thread::sleep_for(interval);
-	}
-}
+            packet.AddPlayerLED(
+                trigger.controllerIndex,
+                static_cast<DSX::PlayerLEDNewRevision>(trigger.playerLEDNewRev)
+            );
 
-BGSKeywordForm* GetKeywordForm(TESObjectWEAP* wep)
-{
-	BGSKeywordForm* result = nullptr;
+            packet.AddMicLED(
+                trigger.controllerIndex,
+                static_cast<DSX::MicLEDMode>(trigger.micLEDMode)
+            );
 
-	result = static_cast<BGSKeywordForm*>(wep);
-    return result;
-}
+            triggerPackets.push_back(packet);
+        }
+        
+        logger::info("Generated {} trigger packets", triggerPackets.size());
+    }
 
-
-RE::ENUM_FORM_ID getFormTypeFromID(int id)
-{
-	const auto base = RE::TESForm::GetFormByID(id)->GetFormType();
-	return base;
-}
-
-RE::TESForm* getTESFormFromID(int id)
-{
-	const auto base = RE::TESForm::GetFormByID(id);
-
-	return base;
-}
-
-
-
-#pragma endregion
-
-
-
-
-#pragma region UDPServer
-
-#ifndef WIN32
-#	define WIN32_LEAN_AND_MEAN
-#	include <WinSock2.h>
-#endif
-
-#pragma comment(lib, "ws2_32.lib")
-#pragma warning(disable: 4996)
-
-#define SERVER "127.0.0.1"  // or "localhost" - ip address of UDP server
-#define BUFLEN 512          // max length of answer
-#define PORT 6969           // the port on which to listen for incoming data
-
-#pragma warning(push)
-#pragma warning(disable: 4244)
-
-void UDPStart()
-{
-	// initialise winsock
-	WSADATA ws;
-	logger::info("Initialising Winsock..."sv);
-	if (WSAStartup(MAKEWORD(2, 2), &ws) != 0) {
-		logger::error("Failed. Error Code: %d", WSAGetLastError());
-	}
-	logger::info("Initialised.\n");
-
-	// create socket
-
-	if ((mysocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == SOCKET_ERROR)  // <<< UDP socket
+    void BackgroundThread(std::chrono::milliseconds interval)
 	{
-		logger::error("socket() failed with error code: %d", WSAGetLastError());
-	}
-
-	// setup address structure
-	memset((char*)&server, 0, sizeof(server));
-	server.sin_family = AF_INET;
-	server.sin_port = htons(PORT);
-	server.sin_addr.S_un.S_addr = inet_addr(SERVER);
-
-}
-
-
-#pragma warning(pop)
-#pragma endregion
-
-
-
-#pragma region Events
-
-	//*********************Biped Slots********************
-	// 30	-	0x1
-	// 31	-	0x2
-	// 32	-	0x4
-	// 33	-	0x8
-	// 34	-	0x10
-	// 35	-	0x20
-	// 36	-	0x40
-	// 37	-	0x80
-	// 38	-	0x100
-	// 39	-	0x200
-	// 40	-	0x400
-	// 41	-	0x800
-	// 42	-	0x1000
-	// 43	-	0x2000
-	// 44	-	0x4000
-	// 45	-	0x8000
-	//****************************************************
-
-	struct TESEquipEvent
-	{
-		Actor* actor;         //00
-		uint32_t formId;  //0C
-		uint32_t unk08;   //08
-		uint64_t flag;    //10 0x00000000ff000000 for unequip
-	};
-
-#pragma warning(push)
-#pragma warning(disable: 4100)
-
-
-
-	class EquipWatcher : public BSTEventSink<TESEquipEvent>
-	{
-	public:
-		virtual BSEventNotifyControl ProcessEvent(const TESEquipEvent& evn, BSTEventSource<TESEquipEvent>* a_source)
-		{
-			TESForm* item = TESForm::GetFormByID(evn.formId);
-			if (item && item->formType == ENUM_FORM_ID::kWEAP) {
-				if (evn.actor->IsPlayerRef())
-				{
-					if (!(evn.flag == unequipped)) {
-
-					    auto equippedWeapon = static_cast<TESObjectWEAP*>(item);
-					    auto result = equippedWeapon->weaponData.type;
-						logger::info(FMT_STRING("Equip Detected of WeaponData type: {}"), result);
-						bool formidcustomweap = false;
-
-
-						//check if its a custom form first before switching to generic weapontype
-						for (int i = 20; i < userTriggers.TriggersList.size(); i++) {
-
-							if (!(userTriggers.TriggersList[i].formID.empty())) {
-								uint32_t inDec = std::stol(userTriggers.TriggersList[i].formID, nullptr, 16);
-
-								if (inDec == item->formID) {
-									logger::info(FMT_STRING("Found custom weapon of FormID: {}"), inDec);
-									formidcustomweap = true;
-
-									if (userTriggers.TriggersList[i].triggerSide == 1) {
-										//left trigger assign for custom
-										actionLeft = PacketToString(myPackets.at(i));
-
-									} else if (userTriggers.TriggersList[i].triggerSide == 2) {
-										//right trigger assign for custom
-										actionRight = PacketToString(myPackets.at(i));
-									}
-								}
-							}
-						}
-
-						if (!formidcustomweap) 
-						{
-							BSTArray<EquippedItem>& equipped = evn.actor->currentProcess->middleHigh->equippedItems;
-							TESObjectWEAP* wep = ((TESObjectWEAP*)equipped[0].item.object);
-							TESObjectWEAP::InstanceData* instance = (TESObjectWEAP::InstanceData*)equipped[0].item.instanceData.get();
-
-							_MESSAGE("Equip Detected of Object Type Name: %llx", item->GetObjectTypeName());
-
-							switch (result) {
-							case 0:
-								actionLeft = PacketToString(myPackets.at(2));  //aim
-								actionRight = PacketToString(myPackets.at(3));
-								break;
-							case 1:
-								actionLeft = PacketToString(myPackets.at(4));
-								actionRight = PacketToString(myPackets.at(5));
-								break;
-							case 5:
-								actionLeft = PacketToString(myPackets.at(6));
-								actionRight = PacketToString(myPackets.at(7));
-								break;
-							case 6:
-								actionLeft = PacketToString(myPackets.at(8));
-								actionRight = PacketToString(myPackets.at(9));
-								break;
-							case 9:
-								if (equipped.size() > 0 && equipped[0].item.instanceData &&
-									(instance)->type == 9) {
-									//detected this is a gun
-
-									bool isAutomatic = (instance->flags & 0x00008000) == 0x00008000;
-									logger::info(FMT_STRING("isAutomatic: {}"), isAutomatic);
-
-									bool isChargingAttack = (instance->flags & 0x00000200) == 0x00000200;  //slow spin up until attack
-									logger::info(FMT_STRING("isChargingAttack: {}"), isChargingAttack);
-
-									bool isBoltAction = (instance->flags & 0x00400000) == 0x00400000;
-									logger::info(FMT_STRING("isBoltAction: {}"), isBoltAction);
-
-									bool isHoldInputToPower = (instance->flags & 0x00000800) == 0x00000800;  //charges while trigger held down then fires when released.
-									logger::info(FMT_STRING("isHoldInputToPower: {}"), isHoldInputToPower);
-
-									bool isRepeatableSingleFire = (instance->flags & 0x00010000) == 0x00010000;
-									logger::info(FMT_STRING("isRepeatableSingleFire: {}"), isRepeatableSingleFire);
-
-									logger::info("Placeholder text");
-
-									if (isAutomatic) {
-										actionLeft = PacketToString(myPackets.at(10));   //aim
-										actionRight = PacketToString(myPackets.at(11));  //vibrating trigger
-										logger::info(FMT_STRING("Loading is Automatic Settings: {}"), isAutomatic);
-									} 
-									else if (isBoltAction) {
-										actionLeft = PacketToString(myPackets.at(14));   //aim
-										actionRight = PacketToString(myPackets.at(15));  //vibrating trigger
-										logger::info(FMT_STRING("Loading is Bolt Action Settings: {}"), isBoltAction);
-									}
-									else if (isChargingAttack) {
-										actionLeft = PacketToString(myPackets.at(12));   //aim
-										actionRight = PacketToString(myPackets.at(13));  //vibrating trigger
-										logger::info(FMT_STRING("Loading Hold Input To PowerAttack Settings: {}"), isChargingAttack);
-									} 
-									else if (isHoldInputToPower) {
-										actionLeft = PacketToString(myPackets.at(16));   //aim
-										actionRight = PacketToString(myPackets.at(17));  //vibrating trigger
-										logger::info(FMT_STRING("Loading Hold Input To PowerAttack Settings: {}"), isHoldInputToPower);
-									} 
-									else {
-										actionLeft = PacketToString(myPackets.at(18));   //aim
-										actionRight = PacketToString(myPackets.at(19));  //any other gun trigger (shotguns)
-										logger::info("Loading Regular Gun Settings");
-									}
-								}
-								break;
-
-							default:
-								break;
-							}
-						}
-
-						if (actionLeft.empty() && actionRight.empty()) {
-							return RE::BSEventNotifyControl::kContinue;
-						} else if (!actionLeft.empty() && actionRight.empty()) {
-							sendToDSX(actionLeft);
-						} else if (actionLeft.empty() && !actionRight.empty()) {
-							sendToDSX(actionRight);
-
-						} else if (!actionLeft.empty() && !actionRight.empty()) {
-							sendToDSX(actionLeft);
-							sendToDSX(actionRight);
-						}
-
-					}else 
-					{
-						
-					    auto equippedWeapon = static_cast<TESObjectWEAP*>(item);
-						auto result = equippedWeapon->weaponData.type;
-						logger::info(FMT_STRING("UnEquip Detected of type: {}"), result);
-
-						actionLeft = PacketToString(myPackets.at(0));  //empty hands left setting
-						actionRight = PacketToString(myPackets.at(1)); //empty hands right setting
-						sendToDSX(actionLeft);
-						sendToDSX(actionRight);
-						
-					}
-
-					return BSEventNotifyControl::kContinue;
-				}
-				
+		while (true) {
+			if (!lastLeftPacket.instructions.empty()) {
+				networkManager.SendPacket(lastLeftPacket);
 			}
-			return BSEventNotifyControl::kContinue;
+			if (!lastRightPacket.instructions.empty()) {
+				networkManager.SendPacket(lastRightPacket);
+			}
+			std::this_thread::sleep_for(interval);
 		}
-		F4_HEAP_REDEFINE_NEW(EquipEventSink);
-	};
+	}
 
-#pragma warning(pop)
-#pragma endregion
+}
 
-#pragma region Event Sources
+extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Query(const F4SE::QueryInterface* a_f4se, F4SE::PluginInfo* a_info) {
 
-class EquipEventSource : public BSTEventSource<TESEquipEvent>
-{
-public:
-	[[nodiscard]] static EquipEventSource* GetSingleton()
+    a_info->infoVersion = F4SE::PluginInfo::kVersion;
+	a_info->name = Plugin::NAME.data();
+	a_info->version = Plugin::VERSION[0];
+
+    if (a_f4se->IsEditor()) {
+        logger::critical("loaded in editor"sv);
+        return false;
+    }
+
+    const auto ver = a_f4se->RuntimeVersion();
+	/*if (ver < F4SE::RUNTIME_1_10_980) 
 	{
-		REL::Relocation<EquipEventSource*> singleton{ REL::ID(485633) };
-		return singleton.get();
-	}
-};
-
-#pragma endregion
-
-
-#pragma region F4SE Initialize
-
-extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Query(const F4SE::QueryInterface* a_f4se, F4SE::PluginInfo* a_info)
-{
-#ifndef NDEBUG
-	auto sink = std::make_shared<spdlog::sinks::msvc_sink_mt>();
-#else
-	auto path = logger::log_directory();
-	if (!path) {
-		return false;
-	}
-
-	*path /= fmt::format(FMT_STRING("{}.log"), Version::PROJECT);
-	auto sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(path->string(), true);
-#endif
-
-	auto log = std::make_shared<spdlog::logger>("global log"s, std::move(sink));
-
-#ifndef NDEBUG
-	log->set_level(spdlog::level::trace);
-#else
-	log->set_level(spdlog::level::info);
-	log->flush_on(spdlog::level::warn);
-#endif
-
-	spdlog::set_default_logger(std::move(log));
-	spdlog::set_pattern("%g(%#): [%^%l%$] %v"s);
-
-	logger::info(FMT_STRING("{} v{}"), Version::PROJECT, Version::NAME);
-
-	a_info->infoVersion = F4SE::PluginInfo::kVersion;
-	a_info->name = Version::PROJECT.data();
-	a_info->version = Version::MAJOR;
-
-	if (a_f4se->IsEditor()) {
-		logger::critical("loaded in editor"sv);
-		return false;
-	}
-
-	const auto ver = a_f4se->RuntimeVersion();
-	if (ver < F4SE::RUNTIME_1_10_162) {
-		logger::critical(FMT_STRING("unsupported runtime v{}"), ver.string());
-		return false;
-	}
-
-	return true;
+        logger::critical("unsupported runtime v{}"sv, ver.string());
+        return false;
+    }*/
+    return true;
 }
 
-extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Load(const F4SE::LoadInterface* a_f4se)
-{
-#ifndef NDEBUG
-	while (!IsDebuggerPresent()) {};
-#endif
+extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Load(const F4SE::LoadInterface* a_f4se) {
+    F4SE::Init(a_f4se);
+    spdlog::set_pattern("[%Y-%m-%d %T.%e][%-16s:%-4#][%L]: %v"s);
+    
+    logger::info("DSXFallout4 v{}.{}.{} {} {} is loading"sv, 1, 4, 0, __DATE__, __TIME__);
+    const auto runtimeVer = REL::Module::get().version();
+    logger::info("Fallout 4 v{}.{}.{}"sv, runtimeVer[0], runtimeVer[1], runtimeVer[2]);
+    
+    const auto messaging = F4SE::GetMessagingInterface();
+    if (!messaging || !messaging->RegisterListener(MessageHandler)) {
+        return false;
+    }
 
-	F4SE::Init(a_f4se);
-
-	logger::info("Loading JSON Files");
-	readFromConfig();
-
-	logger::info("Generate Packet Vector from Config");
-	generatePacketInfo(userTriggers, myPackets);
-
-
-	logger::info("Starting up UDP"sv);
-	UDPStart();
-
-	logger::info("Starting up Background Trigger Applier"sv);
-	auto interval = std::chrono::milliseconds(100);
-	std::thread background_worker(background, interval);
-	background_worker.detach();
-
-	const F4SE::MessagingInterface* message = F4SE::GetMessagingInterface();
-	message->RegisterListener([](F4SE::MessagingInterface::Message* msg) -> void {
-		if (msg->type == F4SE::MessagingInterface::kGameDataReady) {
-			player = PlayerCharacter::GetSingleton();
-
-			EquipWatcher* ew = new EquipWatcher();
-			logger::info("Registering Equip Listener for Event Callback"sv);
-			EquipEventSource::GetSingleton()->RegisterSink(ew);
-		}
-
-		if (msg->type == F4SE::MessagingInterface::kGameLoaded) {
-			player = PlayerCharacter::GetSingleton();
-
-			EquipWatcher* ew = new EquipWatcher();
-			logger::info("Registering Equip Listener for Event Callback"sv);
-			EquipEventSource::GetSingleton()->RegisterSink(ew);
-		}
-	});
-
-	
-
-	return true;
+    return true;
 }
 
-#pragma endregion
+F4SE_EXPORT constinit auto F4SEPlugin_Version = []() noexcept {
+	F4SE::PluginVersionData data{};
 
+	data.PluginName(Plugin::NAME.data());
+	data.PluginVersion(Plugin::VERSION);
+	data.AuthorName("dvize");
+	data.UsesAddressLibrary(true);
+	data.UsesSigScanning(false);
+	data.IsLayoutDependent(true);
+	data.HasNoStructUse(false);
+	data.CompatibleVersions({ F4SE::RUNTIME_LATEST});
 
-#pragma warning(pop)
+	return data;
+}();
+

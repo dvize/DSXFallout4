@@ -1,78 +1,103 @@
 {
-	"configurePresets": [
-		{
-			"binaryDir": "${sourceDir}/build",
-			"cacheVariables": {
-				"CMAKE_BUILD_TYPE": {
-					"type": "STRING",
-					"value": "Debug"
-				}
-			},
-			"errors": {
-				"deprecated": true
-			},
-			"hidden": true,
-			"name": "cmake-dev",
-			"warnings": {
-				"deprecated": true,
-				"dev": true
-			}
-		},
-		{
-			"cacheVariables": {
-				"CMAKE_TOOLCHAIN_FILE": {
-					"type": "STRING",
-					"value": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
-				}
-			},
-			"hidden": true,
-			"name": "vcpkg"
-		},
-		{
-			"cacheVariables": {
-				"CMAKE_MSVC_RUNTIME_LIBRARY": {
-					"type": "STRING",
-					"value": "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL"
-				},
-				"VCPKG_TARGET_TRIPLET": {
-					"type": "STRING",
-					"value": "x64-windows-static-md"
-				}
-			},
-			"hidden": true,
-			"name": "windows"
-		},
-		{
-			"architecture": {
-				"strategy": "set",
-				"value": "x64"
-			},
-			"cacheVariables": {
-				"CMAKE_CXX_FLAGS": "/EHsc /MP /W4 /WX"
-			},
-			"generator": "Visual Studio 17 2022",
-			"inherits": [
-				"cmake-dev",
-				"vcpkg",
-				"windows"
-			],
-			"hidden": true,
-			"name": "vs2022-windows",
-			"toolset": "v143"
-		},
-		{
-			"binaryDir": "${sourceDir}/build/fallout4",
-			"cacheVariables": {
-				"BUILD_FALLOUT4": true
-			},
-			"inherits": [
-				"cmake-dev",
-				"vcpkg",
-				"windows",
-				"vs2022-windows"
-			],
-			"name": "fallout4"
-		}
-	],
-	"version": 3
+  "version": 3,
+  "configurePresets": [
+    {
+      "binaryDir": "${sourceDir}/build",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": {
+          "type": "STRING",
+          "value": "Release"
+        }
+      },
+      "errors": {
+        "deprecated": true
+      },
+      "hidden": true,
+      "name": "cmake-dev",
+      "warnings": {
+        "deprecated": true,
+        "dev": true
+      }
+    },
+    {
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": {
+          "type": "STRING",
+          "value": "$env{VCPKG_INSTALLATION_ROOT}/scripts/buildsystems/vcpkg.cmake"
+        },
+        "VCPKG_OVERLAY_PORTS": {
+          "type": "STRING",
+          "value": "${sourceDir}/cmake/ports/"
+        }
+      },
+      "hidden": true,
+      "name": "vcpkg"
+    },
+    {
+      "cacheVariables": {
+        "CMAKE_MSVC_RUNTIME_LIBRARY": {
+          "type": "STRING",
+          "value": "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL"
+        },
+        "VCPKG_TARGET_TRIPLET": {
+          "type": "STRING",
+          "value": "x64-windows-static-md"
+        }
+      },
+      "hidden": true,
+      "name": "windows"
+    },
+    {
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "/EHsc /MP /W4 /WX /external:anglebrackets /external:W0"
+      },
+      "generator": "Visual Studio 16 2019",
+      "inherits": [
+        "cmake-dev",
+        "vcpkg",
+        "windows"
+      ],
+      "name": "vs2019-windows-vcpkg"
+    },
+    {
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "/EHsc /MP /W4 /WX /external:W0"
+      },
+      "hidden": true,
+      "name": "vs2022-flags"
+    },
+    {
+      "generator": "Visual Studio 17 2022",
+      "inherits": [
+        "vs2022-flags",
+        "cmake-dev",
+        "vcpkg",
+        "windows"
+      ],
+      "name": "vs2022-windows-vcpkg",
+      "toolset": "v143"
+    },
+    {
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "cl"
+      },
+      "architecture": {
+        "strategy": "external",
+        "value": "x64"
+      },
+      "toolset": {
+        "strategy": "external",
+        "value": "v143,host=x64"
+      },
+      "generator": "Ninja",
+      "inherits": [
+        "vs2022-flags",
+        "cmake-dev",
+        "vcpkg",
+        "windows"
+      ],
+      "description": "If you are running CMake from the command line and not from an IDE, make sure to run 'vcvars64.bat' first. The default installed location of this is 'C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Auxiliary\\Build\\vcvars64.bat'.",
+      "name": "vs2022-ninja-windows-vcpkg"
+    }
+  ]
 }
