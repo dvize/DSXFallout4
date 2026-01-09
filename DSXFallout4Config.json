@@ -1,674 +1,1304 @@
 [
     {
-        "Category": "Default",
-        "CustomFormID": "",
-        "ControllerIndex": 0,
-        "Description": "Default empty left hand settings",
-        "MicLEDMode": 2,
         "Name": "Default Left",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 0, 0, 0],
-        "TriggerSide": 1,
-        "TriggerThreshold": 0,
-        "TriggerType": 0,
-        "customTriggerMode": 0,
-        "playerLEDNewRev": 5
-    },
-    {
+        "CustomFormID": "",
         "Category": "Default",
-        "CustomFormID": "",
+        "Description": "Default empty left hand settings",
         "ControllerIndex": 0,
-        "Description": "Default empty right hand settings",
-        "MicLEDMode": 2,
-        "Name": "Default Right",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 0, 0, 0],
-        "TriggerSide": 2,
-        "TriggerThreshold": 0,
+        "TriggerSide": 1,
         "TriggerType": 0,
         "customTriggerMode": 0,
-        "playerLEDNewRev": 5
+        "TriggerParams": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 0
     },
     {
-        "Category": "HandToHand",
+        "Name": "Default Right",
         "CustomFormID": "",
+        "Category": "Default",
+        "Description": "Default empty right hand settings",
         "ControllerIndex": 0,
-        "Description": "Hand to Hand block settings",
+        "TriggerSide": 2,
+        "TriggerType": 0,
+        "customTriggerMode": 0,
+        "TriggerParams": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
         "MicLEDMode": 2,
+        "TriggerThreshold": 0
+    },
+    {
         "Name": "Hand to Hand Block",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 1, 0, 0],
-        "TriggerSide": 1,
-        "TriggerThreshold": 0,
-        "TriggerType": 13,
-        "customTriggerMode": 0,
-        "playerLEDNewRev": 5
-    },
-    {
+        "CustomFormID": "",
         "Category": "HandToHand",
-        "CustomFormID": "",
+        "Description": "Hand to Hand block settings",
         "ControllerIndex": 0,
-        "Description": "Hand to Hand attack settings",
+        "TriggerSide": 1,
+        "TriggerType": 13,
+        "customTriggerMode": 0,
+        "TriggerParams": [
+            0,
+            1,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
         "MicLEDMode": 2,
+        "TriggerThreshold": 0
+    },
+    {
         "Name": "Hand to Hand Attack",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 2, 0, 0],
+        "CustomFormID": "",
+        "Category": "HandToHand",
+        "Description": "Hand to Hand attack settings",
+        "ControllerIndex": 0,
         "TriggerSide": 2,
-        "TriggerThreshold": 0,
         "TriggerType": 13,
         "customTriggerMode": 0,
-        "playerLEDNewRev": 5
+        "TriggerParams": [
+            0,
+            2,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 0
     },
     {
-        "Category": "OneHandSword",
-        "CustomFormID": "",
-        "ControllerIndex": 0,
-        "Description": "One-handed sword block",
-        "MicLEDMode": 2,
         "Name": "One Hand Sword Block",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 1, 0, 0],
-        "TriggerSide": 1,
-        "TriggerThreshold": 0,
-        "TriggerType": 13,
-        "customTriggerMode": 0,
-        "playerLEDNewRev": 5
-    },
-    {
+        "CustomFormID": "",
         "Category": "OneHandSword",
-        "CustomFormID": "",
+        "Description": "One-handed sword block",
         "ControllerIndex": 0,
-        "Description": "One-handed sword attack",
+        "TriggerSide": 1,
+        "TriggerType": 13,
+        "customTriggerMode": 0,
+        "TriggerParams": [
+            0,
+            1,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
         "MicLEDMode": 2,
+        "TriggerThreshold": 0
+    },
+    {
         "Name": "One Hand Sword Attack",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 2, 0, 0],
+        "CustomFormID": "",
+        "Category": "OneHandSword",
+        "Description": "One-handed sword attack",
+        "ControllerIndex": 0,
         "TriggerSide": 2,
-        "TriggerThreshold": 0,
         "TriggerType": 13,
         "customTriggerMode": 0,
-        "playerLEDNewRev": 5
+        "TriggerParams": [
+            0,
+            2,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 0
     },
     {
-        "Category": "OneHandDagger",
-        "CustomFormID": "",
-        "ControllerIndex": 0,
-        "Description": "One-handed dagger block",
-        "MicLEDMode": 2,
         "Name": "One Hand Dagger Block",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 1, 0, 0],
-        "TriggerSide": 1,
-        "TriggerThreshold": 0,
-        "TriggerType": 13,
-        "customTriggerMode": 0,
-        "playerLEDNewRev": 5
-    },
-    {
+        "CustomFormID": "",
         "Category": "OneHandDagger",
-        "CustomFormID": "",
+        "Description": "One-handed dagger block",
         "ControllerIndex": 0,
-        "Description": "One-handed dagger attack",
+        "TriggerSide": 1,
+        "TriggerType": 13,
+        "customTriggerMode": 0,
+        "TriggerParams": [
+            0,
+            1,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
         "MicLEDMode": 2,
+        "TriggerThreshold": 0
+    },
+    {
         "Name": "One Hand Dagger Attack",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 2, 0, 0],
+        "CustomFormID": "",
+        "Category": "OneHandDagger",
+        "Description": "One-handed dagger attack",
+        "ControllerIndex": 0,
         "TriggerSide": 2,
-        "TriggerThreshold": 0,
         "TriggerType": 13,
         "customTriggerMode": 0,
-        "playerLEDNewRev": 5
+        "TriggerParams": [
+            0,
+            2,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 0
     },
     {
-        "Category": "OneHandAxe",
-        "CustomFormID": "",
-        "ControllerIndex": 0,
-        "Description": "One-handed axe block",
-        "MicLEDMode": 2,
         "Name": "One Hand Axe Block",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 1, 0, 0],
-        "TriggerSide": 1,
-        "TriggerThreshold": 0,
-        "TriggerType": 13,
-        "customTriggerMode": 0,
-        "playerLEDNewRev": 5
-    },
-    {
+        "CustomFormID": "",
         "Category": "OneHandAxe",
-        "CustomFormID": "",
+        "Description": "One-handed axe block",
         "ControllerIndex": 0,
-        "Description": "One-handed axe attack",
+        "TriggerSide": 1,
+        "TriggerType": 13,
+        "customTriggerMode": 0,
+        "TriggerParams": [
+            0,
+            1,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
         "MicLEDMode": 2,
+        "TriggerThreshold": 0
+    },
+    {
         "Name": "One Hand Axe Attack",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 2, 0, 0],
+        "CustomFormID": "",
+        "Category": "OneHandAxe",
+        "Description": "One-handed axe attack",
+        "ControllerIndex": 0,
         "TriggerSide": 2,
-        "TriggerThreshold": 0,
         "TriggerType": 13,
         "customTriggerMode": 0,
-        "playerLEDNewRev": 5
+        "TriggerParams": [
+            0,
+            2,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 0
     },
     {
-        "Category": "OneHandMace",
-        "CustomFormID": "",
-        "ControllerIndex": 0,
-        "Description": "One-handed mace block",
-        "MicLEDMode": 2,
         "Name": "One Hand Mace Block",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 1, 0, 0],
-        "TriggerSide": 1,
-        "TriggerThreshold": 0,
-        "TriggerType": 13,
-        "customTriggerMode": 0,
-        "playerLEDNewRev": 5
-    },
-    {
+        "CustomFormID": "",
         "Category": "OneHandMace",
-        "CustomFormID": "",
+        "Description": "One-handed mace block",
         "ControllerIndex": 0,
-        "Description": "One-handed mace attack",
+        "TriggerSide": 1,
+        "TriggerType": 13,
+        "customTriggerMode": 0,
+        "TriggerParams": [
+            0,
+            1,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
         "MicLEDMode": 2,
+        "TriggerThreshold": 0
+    },
+    {
         "Name": "One Hand Mace Attack",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 2, 0, 0],
+        "CustomFormID": "",
+        "Category": "OneHandMace",
+        "Description": "One-handed mace attack",
+        "ControllerIndex": 0,
         "TriggerSide": 2,
-        "TriggerThreshold": 0,
         "TriggerType": 13,
         "customTriggerMode": 0,
-        "playerLEDNewRev": 5
+        "TriggerParams": [
+            0,
+            2,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 0
     },
     {
-        "Category": "TwoHandSword",
-        "CustomFormID": "",
-        "ControllerIndex": 0,
-        "Description": "Two-handed sword block",
-        "MicLEDMode": 2,
         "Name": "Two Hand Sword Block",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 2, 0, 0],
-        "TriggerSide": 1,
-        "TriggerThreshold": 0,
-        "TriggerType": 13,
-        "customTriggerMode": 0,
-        "playerLEDNewRev": 5
-    },
-    {
+        "CustomFormID": "",
         "Category": "TwoHandSword",
-        "CustomFormID": "",
+        "Description": "Two-handed sword block",
         "ControllerIndex": 0,
-        "Description": "Two-handed sword attack",
+        "TriggerSide": 1,
+        "TriggerType": 13,
+        "customTriggerMode": 0,
+        "TriggerParams": [
+            0,
+            2,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
         "MicLEDMode": 2,
+        "TriggerThreshold": 0
+    },
+    {
         "Name": "Two Hand Sword Attack",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 3, 0, 0],
+        "CustomFormID": "",
+        "Category": "TwoHandSword",
+        "Description": "Two-handed sword attack",
+        "ControllerIndex": 0,
         "TriggerSide": 2,
-        "TriggerThreshold": 0,
         "TriggerType": 13,
         "customTriggerMode": 0,
-        "playerLEDNewRev": 5
+        "TriggerParams": [
+            0,
+            3,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 0
     },
     {
-        "Category": "TwoHandAxe",
-        "CustomFormID": "",
-        "ControllerIndex": 0,
-        "Description": "Two-handed axe block",
-        "MicLEDMode": 2,
         "Name": "Two Hand Axe Block",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 2, 0, 0],
-        "TriggerSide": 1,
-        "TriggerThreshold": 0,
-        "TriggerType": 13,
-        "customTriggerMode": 0,
-        "playerLEDNewRev": 5
-    },
-    {
+        "CustomFormID": "",
         "Category": "TwoHandAxe",
-        "CustomFormID": "",
+        "Description": "Two-handed axe block",
         "ControllerIndex": 0,
-        "Description": "Two-handed axe attack",
-        "MicLEDMode": 2,
-        "Name": "Two Hand Axe Attack",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 3, 0, 0],
-        "TriggerSide": 2,
-        "TriggerThreshold": 0,
-        "TriggerType": 13,
-        "customTriggerMode": 0,
-        "playerLEDNewRev": 5
-    },
-    {
-        "Category": "Bow",
-        "CustomFormID": "",
-        "ControllerIndex": 0,
-        "Description": "Bow aiming",
-        "MicLEDMode": 2,
-        "Name": "Bow Aim",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 2, 0, 0],
         "TriggerSide": 1,
-        "TriggerThreshold": 50,
         "TriggerType": 13,
         "customTriggerMode": 0,
-        "playerLEDNewRev": 5
+        "TriggerParams": [
+            0,
+            2,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 0
     },
     {
-        "Category": "Bow",
+        "Name": "Two Hand Axe Attack",
         "CustomFormID": "",
+        "Category": "TwoHandAxe",
+        "Description": "Two-handed axe attack",
         "ControllerIndex": 0,
-        "Description": "Bow firing",
-        "MicLEDMode": 2,
-        "Name": "Bow Fire",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 8, 4, 8],
         "TriggerSide": 2,
-        "TriggerThreshold": 80,
+        "TriggerType": 13,
+        "customTriggerMode": 0,
+        "TriggerParams": [
+            0,
+            3,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 0
+    },
+    {
+        "Name": "Bow Aim",
+        "CustomFormID": "",
+        "Category": "Bow",
+        "Description": "Bow aiming",
+        "ControllerIndex": 0,
+        "TriggerSide": 1,
+        "TriggerType": 13,
+        "customTriggerMode": 0,
+        "TriggerParams": [
+            0,
+            2,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 50
+    },
+    {
+        "Name": "Bow Fire",
+        "CustomFormID": "",
+        "Category": "Bow",
+        "Description": "Bow firing",
+        "ControllerIndex": 0,
+        "TriggerSide": 2,
         "TriggerType": 14,
         "customTriggerMode": 0,
-        "playerLEDNewRev": 5
+        "TriggerParams": [
+            0,
+            8,
+            4,
+            8
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 80
     },
     {
-        "Category": "Staff",
-        "CustomFormID": "",
-        "ControllerIndex": 0,
-        "Description": "Staff aiming",
-        "MicLEDMode": 2,
         "Name": "Staff Aim",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 1, 0, 0],
-        "TriggerSide": 1,
-        "TriggerThreshold": 25,
-        "TriggerType": 13,
-        "customTriggerMode": 0,
-        "playerLEDNewRev": 5
-    },
-    {
+        "CustomFormID": "",
         "Category": "Staff",
-        "CustomFormID": "",
+        "Description": "Staff aiming",
         "ControllerIndex": 0,
-        "Description": "Staff firing",
-        "MicLEDMode": 2,
-        "Name": "Staff Fire",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 3, 0, 0],
-        "TriggerSide": 2,
-        "TriggerThreshold": 60,
-        "TriggerType": 13,
-        "customTriggerMode": 0,
-        "playerLEDNewRev": 5
-    },
-    {
-        "Category": "Gun_Automatic",
-        "CustomFormID": "",
-        "ControllerIndex": 0,
-        "Description": "Automatic gun aiming",
-        "MicLEDMode": 2,
-        "Name": "Automatic Gun Aim",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 1, 0, 0],
         "TriggerSide": 1,
-        "TriggerThreshold": 25,
         "TriggerType": 13,
         "customTriggerMode": 0,
-        "playerLEDNewRev": 5
+        "TriggerParams": [
+            0,
+            1,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 25
     },
     {
-        "Category": "Gun_Automatic",
+        "Name": "Staff Fire",
         "CustomFormID": "",
+        "Category": "Staff",
+        "Description": "Staff firing",
         "ControllerIndex": 0,
-        "Description": "Automatic gun firing",
-        "MicLEDMode": 2,
-        "Name": "Automatic Gun Fire",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [10, 0, 0, 0],
         "TriggerSide": 2,
-        "TriggerThreshold": 60,
+        "TriggerType": 13,
+        "customTriggerMode": 0,
+        "TriggerParams": [
+            0,
+            3,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 60
+    },
+    {
+        "Name": "Automatic Gun Aim",
+        "CustomFormID": "",
+        "Category": "Gun_Automatic",
+        "Description": "Automatic gun aiming",
+        "ControllerIndex": 0,
+        "TriggerSide": 1,
+        "TriggerType": 13,
+        "customTriggerMode": 0,
+        "TriggerParams": [
+            0,
+            1,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 25
+    },
+    {
+        "Name": "Automatic Gun Fire",
+        "CustomFormID": "",
+        "Category": "Gun_Automatic",
+        "Description": "Automatic gun firing",
+        "ControllerIndex": 0,
+        "TriggerSide": 2,
         "TriggerType": 8,
         "customTriggerMode": 0,
-        "playerLEDNewRev": 5
+        "TriggerParams": [
+            10,
+            0,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 60
     },
     {
-        "Category": "Gun_ChargingAttack",
-        "CustomFormID": "",
-        "ControllerIndex": 0,
-        "Description": "Charging attack gun aiming",
-        "MicLEDMode": 2,
         "Name": "Charging Attack Gun Aim",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 1, 0, 0],
+        "CustomFormID": "",
+        "Category": "Gun_ChargingAttack",
+        "Description": "Charging attack gun aiming",
+        "ControllerIndex": 0,
         "TriggerSide": 1,
-        "TriggerThreshold": 25,
         "TriggerType": 13,
         "customTriggerMode": 0,
-        "playerLEDNewRev": 5
+        "TriggerParams": [
+            0,
+            1,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 25
     },
     {
-        "Category": "Gun_ChargingAttack",
-        "CustomFormID": "",
-        "ControllerIndex": 0,
-        "Description": "Charging attack gun firing",
-        "MicLEDMode": 2,
         "Name": "Charging Attack Gun Fire",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 0, 0, 0],
+        "CustomFormID": "",
+        "Category": "Gun_ChargingAttack",
+        "Description": "Charging attack gun firing",
+        "ControllerIndex": 0,
         "TriggerSide": 2,
-        "TriggerThreshold": 60,
         "TriggerType": 11,
         "customTriggerMode": 0,
-        "playerLEDNewRev": 5
+        "TriggerParams": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 60
     },
     {
-        "Category": "Gun_BoltAction",
-        "CustomFormID": "",
-        "ControllerIndex": 0,
-        "Description": "Bolt action gun aiming",
-        "MicLEDMode": 2,
         "Name": "Bolt Action Gun Aim",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 2, 0, 0],
+        "CustomFormID": "",
+        "Category": "Gun_BoltAction",
+        "Description": "Bolt action gun aiming",
+        "ControllerIndex": 0,
         "TriggerSide": 1,
-        "TriggerThreshold": 25,
         "TriggerType": 13,
         "customTriggerMode": 0,
-        "playerLEDNewRev": 5
+        "TriggerParams": [
+            0,
+            2,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 25
     },
     {
-        "Category": "Gun_BoltAction",
-        "CustomFormID": "",
-        "ControllerIndex": 0,
-        "Description": "Bolt action gun firing",
-        "MicLEDMode": 2,
         "Name": "Bolt Action Gun Fire",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 0, 0, 0],
+        "CustomFormID": "",
+        "Category": "Gun_BoltAction",
+        "Description": "Bolt action gun firing",
+        "ControllerIndex": 0,
         "TriggerSide": 2,
-        "TriggerThreshold": 60,
         "TriggerType": 5,
         "customTriggerMode": 0,
-        "playerLEDNewRev": 5
+        "TriggerParams": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 60
     },
     {
-        "Category": "Gun_HoldInputToPower",
-        "CustomFormID": "",
-        "ControllerIndex": 0,
-        "Description": "Hold input to power gun aiming",
-        "MicLEDMode": 2,
         "Name": "Hold Input Gun Aim",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 1, 0, 0],
+        "CustomFormID": "",
+        "Category": "Gun_HoldInputToPower",
+        "Description": "Hold input to power gun aiming",
+        "ControllerIndex": 0,
         "TriggerSide": 1,
-        "TriggerThreshold": 25,
         "TriggerType": 13,
         "customTriggerMode": 0,
-        "playerLEDNewRev": 5
+        "TriggerParams": [
+            0,
+            1,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 25
     },
     {
-        "Category": "Gun_HoldInputToPower",
-        "CustomFormID": "",
-        "ControllerIndex": 0,
-        "Description": "Hold input to power gun firing",
-        "MicLEDMode": 2,
         "Name": "Hold Input Gun Fire",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 0, 0, 0],
+        "CustomFormID": "",
+        "Category": "Gun_HoldInputToPower",
+        "Description": "Hold input to power gun firing",
+        "ControllerIndex": 0,
         "TriggerSide": 2,
-        "TriggerThreshold": 60,
         "TriggerType": 11,
         "customTriggerMode": 0,
-        "playerLEDNewRev": 5
+        "TriggerParams": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 60
     },
     {
-        "Category": "Gun_Regular",
-        "CustomFormID": "",
-        "ControllerIndex": 0,
-        "Description": "Regular gun aiming",
-        "MicLEDMode": 2,
         "Name": "Regular Gun Aim",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 1, 0, 0],
+        "CustomFormID": "",
+        "Category": "Gun_Regular",
+        "Description": "Regular gun aiming",
+        "ControllerIndex": 0,
         "TriggerSide": 1,
-        "TriggerThreshold": 25,
         "TriggerType": 13,
         "customTriggerMode": 0,
-        "playerLEDNewRev": 5
+        "TriggerParams": [
+            0,
+            1,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 25
     },
     {
-        "Category": "Gun_Regular",
-        "CustomFormID": "",
-        "ControllerIndex": 0,
-        "Description": "Regular gun firing",
-        "MicLEDMode": 2,
         "Name": "Regular Gun Fire",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 0, 0, 0],
+        "CustomFormID": "",
+        "Category": "Gun_Regular",
+        "Description": "Regular gun firing",
+        "ControllerIndex": 0,
         "TriggerSide": 2,
-        "TriggerThreshold": 60,
         "TriggerType": 3,
         "customTriggerMode": 0,
-        "playerLEDNewRev": 5
+        "TriggerParams": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 60
     },
     {
-        "Category": "Gun_ChargingReload",
-        "CustomFormID": "",
-        "ControllerIndex": 0,
-        "Description": "Charging reload gun aiming",
-        "MicLEDMode": 2,
         "Name": "Charging Reload Gun Aim",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 1, 0, 0],
+        "CustomFormID": "",
+        "Category": "Gun_ChargingReload",
+        "Description": "Charging reload gun aiming",
+        "ControllerIndex": 0,
         "TriggerSide": 1,
-        "TriggerThreshold": 25,
         "TriggerType": 13,
         "customTriggerMode": 0,
-        "playerLEDNewRev": 5
+        "TriggerParams": [
+            0,
+            1,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 25
     },
     {
-        "Category": "Gun_ChargingReload",
-        "CustomFormID": "",
-        "ControllerIndex": 0,
-        "Description": "Charging reload gun firing",
-        "MicLEDMode": 2,
         "Name": "Charging Reload Gun Fire",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 9, 7, 7],
+        "CustomFormID": "",
+        "Category": "Gun_ChargingReload",
+        "Description": "Charging reload gun firing",
+        "ControllerIndex": 0,
         "TriggerSide": 2,
-        "TriggerThreshold": 60,
         "TriggerType": 18,
         "customTriggerMode": 0,
-        "playerLEDNewRev": 5
+        "TriggerParams": [
+            0,
+            9,
+            7,
+            7
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 60
     },
     {
-        "Category": "Gun_RepeatableSingleFire",
-        "CustomFormID": "",
-        "ControllerIndex": 0,
-        "Description": "Repeatable single fire gun aiming",
-        "MicLEDMode": 2,
         "Name": "Repeatable Single Fire Gun Aim",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 1, 0, 0],
+        "CustomFormID": "",
+        "Category": "Gun_RepeatableSingleFire",
+        "Description": "Repeatable single fire gun aiming",
+        "ControllerIndex": 0,
         "TriggerSide": 1,
-        "TriggerThreshold": 25,
         "TriggerType": 13,
         "customTriggerMode": 0,
-        "playerLEDNewRev": 5
+        "TriggerParams": [
+            0,
+            1,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 25
     },
     {
-        "Category": "Gun_RepeatableSingleFire",
-        "CustomFormID": "",
-        "ControllerIndex": 0,
-        "Description": "Repeatable single fire gun firing",
-        "MicLEDMode": 2,
         "Name": "Repeatable Single Fire Gun Fire",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [2, 7, 8, 0],
+        "CustomFormID": "",
+        "Category": "Gun_RepeatableSingleFire",
+        "Description": "Repeatable single fire gun firing",
+        "ControllerIndex": 0,
         "TriggerSide": 2,
-        "TriggerThreshold": 60,
         "TriggerType": 16,
         "customTriggerMode": 0,
-        "playerLEDNewRev": 5
+        "TriggerParams": [
+            2,
+            7,
+            8,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 60
     },
     {
-        "Category": "Grenade",
-        "CustomFormID": "",
-        "ControllerIndex": 0,
-        "Description": "Grenade aiming",
-        "MicLEDMode": 2,
         "Name": "Grenade Aim",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 1, 0, 0],
-        "TriggerSide": 1,
-        "TriggerThreshold": 25,
-        "TriggerType": 13,
-        "customTriggerMode": 0,
-        "playerLEDNewRev": 5
-    },
-    {
+        "CustomFormID": "",
         "Category": "Grenade",
-        "CustomFormID": "",
+        "Description": "Grenade aiming",
         "ControllerIndex": 0,
-        "Description": "Grenade throwing",
+        "TriggerSide": 1,
+        "TriggerType": 13,
+        "customTriggerMode": 0,
+        "TriggerParams": [
+            0,
+            1,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
         "MicLEDMode": 2,
+        "TriggerThreshold": 25
+    },
+    {
         "Name": "Grenade Throw",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 4, 0, 0],
+        "CustomFormID": "",
+        "Category": "Grenade",
+        "Description": "Grenade throwing",
+        "ControllerIndex": 0,
         "TriggerSide": 2,
-        "TriggerThreshold": 60,
         "TriggerType": 13,
         "customTriggerMode": 0,
-        "playerLEDNewRev": 5
+        "TriggerParams": [
+            0,
+            4,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 60
     },
     {
-        "Category": "Mine",
-        "CustomFormID": "",
-        "ControllerIndex": 0,
-        "Description": "Mine aiming",
-        "MicLEDMode": 2,
         "Name": "Mine Aim",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 1, 0, 0],
-        "TriggerSide": 1,
-        "TriggerThreshold": 25,
-        "TriggerType": 13,
-        "customTriggerMode": 0,
-        "playerLEDNewRev": 5
-    },
-    {
-        "Category": "Mine",
         "CustomFormID": "",
+        "Category": "Mine",
+        "Description": "Mine aiming",
         "ControllerIndex": 0,
-        "Description": "Mine placing",
-        "MicLEDMode": 2,
-        "Name": "Mine Place",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 4, 0, 0],
-        "TriggerSide": 2,
-        "TriggerThreshold": 60,
-        "TriggerType": 13,
-        "customTriggerMode": 0,
-        "playerLEDNewRev": 5
-    },
-    {
-        "Category": "Bow",
-        "CustomFormID": "090391B4",
-        "ControllerIndex": 0,
-        "Description": "Custom Wood Bow aiming (LString Bow Mod)",
-        "MicLEDMode": 2,
-        "Name": "Custom Wood Bow Aim",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 2, 0, 0],
         "TriggerSide": 1,
-        "TriggerThreshold": 50,
         "TriggerType": 13,
         "customTriggerMode": 0,
-        "playerLEDNewRev": 5
+        "TriggerParams": [
+            0,
+            1,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 25
     },
     {
-        "Category": "Bow",
-        "CustomFormID": "090391B4",
+        "Name": "Mine Place",
+        "CustomFormID": "",
+        "Category": "Mine",
+        "Description": "Mine placing",
         "ControllerIndex": 0,
-        "Description": "Custom Wood Bow firing (LString Bow Mod)",
-        "MicLEDMode": 2,
-        "Name": "Custom Wood Bow Fire",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 8, 4, 8],
         "TriggerSide": 2,
-        "TriggerThreshold": 80,
+        "TriggerType": 13,
+        "customTriggerMode": 0,
+        "TriggerParams": [
+            0,
+            4,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 60
+    },
+    {
+        "Name": "Custom Wood Bow Aim",
+        "CustomFormID": "090391B4",
+        "Category": "Bow",
+        "Description": "Custom Wood Bow aiming (LString Bow Mod)",
+        "ControllerIndex": 0,
+        "TriggerSide": 1,
+        "TriggerType": 13,
+        "customTriggerMode": 0,
+        "TriggerParams": [
+            0,
+            2,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 50
+    },
+    {
+        "Name": "Custom Wood Bow Fire",
+        "CustomFormID": "090391B4",
+        "Category": "Bow",
+        "Description": "Custom Wood Bow firing (LString Bow Mod)",
+        "ControllerIndex": 0,
+        "TriggerSide": 2,
         "TriggerType": 14,
         "customTriggerMode": 0,
-        "playerLEDNewRev": 5
+        "TriggerParams": [
+            0,
+            8,
+            4,
+            8
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 80
     },
     {
-        "Category": "TwoHandAxe",
-        "CustomFormID": "001F22C",
-        "ControllerIndex": 0,
-        "Description": "Custom Mr. Handy Buzz Blade block",
-        "MicLEDMode": 2,
         "Name": "Buzz Blade Block",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 2, 0, 0],
+        "CustomFormID": "001F22C",
+        "Category": "TwoHandAxe",
+        "Description": "Custom Mr. Handy Buzz Blade block",
+        "ControllerIndex": 0,
         "TriggerSide": 1,
-        "TriggerThreshold": 0,
         "TriggerType": 13,
         "customTriggerMode": 0,
-        "playerLEDNewRev": 5
+        "TriggerParams": [
+            0,
+            2,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 0
     },
     {
-        "Category": "TwoHandAxe",
-        "CustomFormID": "001F22C",
-        "ControllerIndex": 0,
-        "Description": "Custom Mr. Handy Buzz Blade attack",
-        "MicLEDMode": 2,
         "Name": "Buzz Blade Attack",
-        "PlayerLED": [false, false, false, false, false],
-        "RGBUpdate": [0, 0, 0],
-        "TriggerParams": [0, 0, 0, 0],
+        "CustomFormID": "001F22C",
+        "Category": "TwoHandAxe",
+        "Description": "Custom Mr. Handy Buzz Blade attack",
+        "ControllerIndex": 0,
         "TriggerSide": 2,
-        "TriggerThreshold": 0,
         "TriggerType": 11,
         "customTriggerMode": 0,
-        "playerLEDNewRev": 5
+        "TriggerParams": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "RGBUpdate": [
+            0,
+            0,
+            0
+        ],
+        "PlayerLED": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ],
+        "playerLEDNewRev": 5,
+        "MicLEDMode": 2,
+        "TriggerThreshold": 0
     }
 ]

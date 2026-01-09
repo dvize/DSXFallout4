@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSX Fallout 4 Configurator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>DSX Fallout 4 Configurator</h1>
+            <div class="actions">
+                <button id="add-btn" class="btn primary">Add New Entry</button>
+                <button id="save-btn" class="btn success">Save Configuration</button>
+            </div>
+        </header>
+
+        <div id="loading">Loading configuration...</div>
+
+        <div id="config-list" class="config-list">
+            <!-- Entries will be populated here -->
+        </div>
+    </div>
+
+    <!-- Modal for editing/adding -->
+    <div id="edit-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-title">Edit Entry</h2>
+            <form id="edit-form">
+                <div class="form-group">
+                    <label for="entry-name">Name:</label>
+                    <input type="text" id="entry-name" name="Name" required>
+                    <small class="hint">Unique name for this configuration.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="entry-description">Description:</label>
+                    <input type="text" id="entry-description" name="Description">
+                    <small class="hint">Human-readable description.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="entry-formid">Custom FormID:</label>
+                    <input type="text" id="entry-formid" name="CustomFormID">
+                    <small class="hint">Hex string (e.g., "090391B4") or empty.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="entry-category">Category:</label>
+                    <select id="entry-category" name="Category"></select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label for="entry-controller">Controller Index:</label>
+                        <input type="number" id="entry-controller" name="ControllerIndex" value="0">
+                    </div>
+                    <div class="form-group half">
+                        <label for="entry-side">Trigger Side:</label>
+                        <select id="entry-side" name="TriggerSide">
+                            <option value="1">Left (1)</option>
+                            <option value="2">Right (2)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="entry-type">Trigger Type:</label>
+                    <select id="entry-type" name="TriggerType"></select>
+                    <small id="type-desc" class="desc"></small>
+                </div>
+
+                <div class="form-group hidden" id="custom-mode-group">
+                    <label for="entry-custom-mode">Custom Trigger Mode:</label>
+                    <select id="entry-custom-mode" name="customTriggerMode"></select>
+                    <small id="custom-mode-desc" class="desc"></small>
+                </div>
+
+                <fieldset>
+                    <legend>Trigger Parameters</legend>
+                    <div class="form-row" id="trigger-params-container">
+                        <!-- Params inputs generated dynamically -->
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>LED & RGB</legend>
+                    <div class="form-row">
+                        <div class="form-group third">
+                            <label>RGB Color:</label>
+                            <div class="rgb-inputs">
+                                <input type="number" id="rgb-r" min="0" max="255" placeholder="R">
+                                <input type="number" id="rgb-g" min="0" max="255" placeholder="G">
+                                <input type="number" id="rgb-b" min="0" max="255" placeholder="B">
+                            </div>
+                        </div>
+                        <div class="form-group third">
+                            <label for="entry-player-led">Player LED:</label>
+                            <select id="entry-player-led" name="playerLEDNewRev"></select>
+                        </div>
+                        <div class="form-group third">
+                            <label for="entry-mic-led">Mic LED:</label>
+                            <select id="entry-mic-led" name="MicLEDMode"></select>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="form-group">
+                    <label for="entry-threshold">Trigger Threshold (0-255):</label>
+                    <input type="number" id="entry-threshold" name="TriggerThreshold" min="0" max="255">
+                </div>
+
+                <div class="modal-actions">
+                    <button type="submit" class="btn primary">Apply Changes</button>
+                    <button type="button" id="delete-btn" class="btn danger hidden">Delete Entry</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

@@ -252,7 +252,7 @@ F4SE_EXPORT constinit auto F4SEPlugin_Version = []() noexcept {
 	data.UsesSigScanning(false);
 	data.IsLayoutDependent(true);
 	data.HasNoStructUse(false);
-	data.CompatibleVersions({ F4SE::RUNTIME_LATEST});
+	data.CompatibleVersions({ F4SE::RUNTIME_1_10_163, F4SE::RUNTIME_LATEST});
 
 	return data;
 }();

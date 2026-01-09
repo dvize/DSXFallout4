@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSX Fallout 4 Configuration Guide</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        h1 {
+            border-bottom: 2px solid #2c3e50;
+            padding-bottom: 10px;
+        }
+        h2 {
+            margin-top: 20px;
+        }
+        p {
+            margin: 10px 0;
+        }
+        pre, code {
+            background-color: #ecf0f1;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+        ul, ol {
+            margin: 10px 0 10px 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .note {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffca28;
+            padding: 10px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>DSX Fallout 4 Configuration Guide</h1>
+        <p>This guide explains how to edit the <code>DSXFallout4Config.json</code> file to customize DualSense controller adaptive trigger settings for Fallout 4 using the DSX Fallout 4 mod. It also covers how to add custom weapons and triggers to enhance your gameplay experience. The mod leverages the DualSense controller's adaptive triggers to provide tactile feedback based on weapon types and actions.</p>
+
+        <h2>Overview</h2>
+        <p>The <code>DSXFallout4Config.json</code> file, located in <code>./Data/F4SE/Plugins/</code>, defines the trigger settings for various weapon categories and custom weapons in Fallout 4. Each entry in the JSON file corresponds to a specific trigger configuration applied to the left or right trigger of the DualSense controller.</p>
+
+        <h2>Prerequisites</h2>
+        <ul>
+            <li><strong>DSX Fallout 4 Mod</strong>: Ensure the mod is installed and running with Fallout 4 Script Extender (F4SE).</li>
+            <li><strong>Text Editor</strong>: Use a text editor like Notepad++, Visual Studio Code, or any JSON-supporting editor to modify <code>DSXFallout4Config.json</code>.</li>
+            <li><strong>Fallout 4 FormIDs</strong>: For custom weapons, you'll need the FormID of the weapon from the game (obtainable via console commands or modding tools like xEdit).</li>
+        </ul>
+
+        <h2>Structure of <code>DSXFallout4Config.json</code></h2>
+        <p>The JSON file is an array of objects, where each object represents a trigger configuration. Below is an example entry with explanations of each field:</p>
+        <pre><code>{
+    "Category": "OneHandSword",
+    "CustomFormID": "",
+    "ControllerIndex": 0,
+    "Description": "One-handed sword attack",
+    "MicLEDMode": 2,
+    "Name": "One Hand Sword Attack",
+    "PlayerLED": [false, false, false, false, false],
+    "RGBUpdate": [0, 0, 0],
+    "TriggerParams": [0, 2, 0, 0],
+    "TriggerSide": 2,
+    "TriggerThreshold": 0,
+    "TriggerType": 13,
+    "customTriggerMode": 0,
+    "playerLEDNewRev": 5
+}</code></pre>
+
+        <h3>Field Descriptions</h3>
+        <table>
+            <tr>
+                <th>Field</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Example Values</th>
+            </tr>
+            <tr>
+                <td><code>Category</code></td>
+                <td>String</td>
+                <td>The weapon category or type.</td>
+                <td>"Bow", "TwoHandAxe", "Grenade"</td>
+            </tr>
+            <tr>
+                <td><code>CustomFormID</code></td>
+                <td>String</td>
+                <td>The FormID of a custom weapon (hexadecimal). Leave empty for categories.</td>
+                <td>"090391B4", ""</td>
+            </tr>
+            <tr>
+                <td><code>ControllerIndex</code></td>
+                <td>Integer</td>
+                <td>The controller index (0 for single controller setups).</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td><code>Description</code></td>
+                <td>String</td>
+                <td>A human-readable description of the setting.</td>
+                <td>"One-handed sword attack"</td>
+            </tr>
+            <tr>
+                <td><code>MicLEDMode</code></td>
+                <td>Integer</td>
+                <td>Microphone LED mode (0 = On, 1 = Pulse, 2 = Off).</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td><code>Name</code></td>
+                <td>String</td>
+                <td>Unique name for the trigger setting.</td>
+                <td>"One Hand Sword Attack"</td>
+            </tr>
+            <tr>
+                <td><code>PlayerLED</code></td>
+                <td>Boolean Array[5]</td>
+                <td>Legacy field for player LED states (not used with <code>playerLEDNewRev</code>).</td>
+                <td>[false, false, false, false, false]</td>
+            </tr>
+            <tr>
+                <td><code>RGBUpdate</code></td>
+                <td>Integer Array[3]</td>
+                <td>RGB color values for controller lights (Red, Green, Blue; 0-255).</td>
+                <td>[0, 0, 0] (off), [255, 0, 0] (red)</td>
+            </tr>
+            <tr>
+                <td><code>TriggerParams</code></td>
+                <td>Integer Array[4]</td>
+                <td>Parameters for the trigger mode (varies by <code>TriggerType</code>).</td>
+                <td>[0, 2, 0, 0]</td>
+            </tr>
+            <tr>
+                <td><code>TriggerSide</code></td>
+                <td>Integer</td>
+                <td>Which trigger to apply the setting to (1 = Left, 2 = Right).</td>
+                <td>1, 2</td>
+            </tr>
+            <tr>
+                <td><code>TriggerThreshold</code></td>
+                <td>Integer</td>
+                <td>Threshold value for trigger activation (0-100).</td>
+                <td>0, 50, 80</td>
+            </tr>
+            <tr>
+                <td><code>TriggerType</code></td>
+                <td>Integer</td>
+                <td>The adaptive trigger mode (see Trigger Modes section).</td>
+                <td>13 (Resistance), 14 (Bow)</td>
+            </tr>
+            <tr>
+                <td><code>customTriggerMode</code></td>
+                <td>Integer</td>
+                <td>Custom trigger value mode when <code>TriggerType</code> is 12.</td>
+                <td>0 (OFF), 1 (Rigid)</td>
+            </tr>
+            <tr>
+                <td><code>playerLEDNewRev</code></td>
+                <td>Integer</td>
+                <td>Number of player LEDs to light up (0 = One, ..., 5 = All Off).</td>
+                <td>5</td>
+            </tr>
+        </table>
+
+        <h3>Trigger Modes (<code>TriggerType</code>)</h3>
+        <p>The <code>TriggerParams</code> array [P1, P2, P3, P4] modifies the behavior of each mode. Below are the meanings of each parameter for common modes:</p>
+        <table>
+            <tr>
+                <th>Value</th>
+                <th>Mode</th>
+                <th>Description</th>
+                <th><code>TriggerParams</code> Definitions</th>
+            </tr>
+            <tr>
+                <td>0</td>
+                <td>Normal</td>
+                <td>No resistance or effect.</td>
+                <td>
+                    <ul>
+                        <li>P1: Unused (typically 0).</li>
+                        <li>P2: Unused (typically 0).</li>
+                        <li>P3: Unused (typically 0).</li>
+                        <li>P4: Unused (typically 0).</li>
+                    </ul>
+                    Example: [0, 0, 0, 0]
+                </td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Soft</td>
+                <td>Light resistance across the trigger range.</td>
+                <td>
+                    <ul>
+                        <li>P1: Unused (typically 0).</li>
+                        <li>P2: Unused (typically 0).</li>
+                        <li>P3: Unused (typically 0).</li>
+                        <li>P4: Unused (typically 0).</li>
+                    </ul>
+                    Example: [0, 0, 0, 0]
+                </td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>VeryHard</td>
+                <td>Strong resistance across the trigger range.</td>
+                <td>
+                    <ul>
+                        <li>P1: Unused (typically 0).</li>
+                        <li>P2: Unused (typically 0).</li>
+                        <li>P3: Unused (typically 0).</li>
+                        <li>P4: Unused (typically 0).</li>
+                    </ul>
+                    Example: [0, 0, 0, 0]
+                </td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>VibrateTrigger</td>
+                <td>Vibration effect when the trigger is pressed.</td>
+                <td>
+                    <ul>
+                        <li>P1: Vibration intensity (0-10).</li>
+                        <li>P2: Unused (typically 0).</li>
+                        <li>P3: Unused (typically 0).</li>
+                        <li>P4: Unused (typically 0).</li>
+                    </ul>
+                    Example: [10, 0, 0, 0] (max vibration)
+                </td>
+            </tr>
+            <tr>
+                <td>11</td>
+                <td>VibrateTriggerPulse</td>
+                <td>Pulsing vibration effect.</td>
+                <td>
+                    <ul>
+                        <li>P1: Unused (typically 0).</li>
+                        <li>P2: Unused (typically 0).</li>
+                        <li>P3: Unused (typically 0).</li>
+                        <li>P4: Unused (typically 0).</li>
+                    </ul>
+                    Example: [0, 0, 0, 0] (default pulsing)
+                </td>
+            </tr>
+            <tr>
+                <td>13</td>
+                <td>Resistance</td>
+                <td>Variable resistance starting at a specific point.</td>
+                <td>
+                    <ul>
+                        <li>P1: Start position (0-9, where resistance begins).</li>
+                        <li>P2: Force level (0-9, strength of resistance).</li>
+                        <li>P3: Unused (typically 0).</li>
+                        <li>P4: Unused (typically 0).</li>
+                    </ul>
+                    Example: [0, 2, 0, 0] (resistance starts at 0, light force)
+                </td>
+            </tr>
+            <tr>
+                <td>14</td>
+                <td>Bow</td>
+                <td>Bowstring-like resistance with a release point.</td>
+                <td>
+                    <ul>
+                        <li>P1: Start position (0-9, where resistance begins).</li>
+                        <li>P2: End position (0-9, where resistance peaks).</li>
+                        <li>P3: Force at start (0-9, initial resistance).</li>
+                        <li>P4: Force at end (0-9, peak resistance).</li>
+                    </ul>
+                    Example: [0, 8, 4, 8] (full range, increasing force)
+                </td>
+            </tr>
+            <tr>
+                <td>16</td>
+                <td>SemiAutomaticGun</td>
+                <td>Trigger click simulating semi-auto firing.</td>
+                <td>
+                    <ul>
+                        <li>P1: Start position (0-9, where resistance begins).</li>
+                        <li>P2: End position (0-9, where resistance ends).</li>
+                        <li>P3: Force level (0-9, strength of click).</li>
+                        <li>P4: Unused (typically 0).</li>
+                    </ul>
+                    Example: [2, 7, 8, 0] (click from 2 to 7, strong force)
+                </td>
+            </tr>
+            <tr>
+                <td>18</td>
+                <td>Machine</td>
+                <td>Machine-like resistance and feedback.</td>
+                <td>
+                    <ul>
+                        <li>P1: Start position (0-9, where resistance begins).</li>
+                        <li>P2: End position (0-9, where resistance peaks).</li>
+                        <li>P3: Force at start (0-9, initial resistance).</li>
+                        <li>P4: Force at end (0-9, peak resistance).</li>
+                    </ul>
+                    Example: [0, 9, 7, 7] (full range, consistent force)
+                </td>
+            </tr>
+        </table>
+
+        <h3>Custom Trigger Modes (<code>customTriggerMode</code>)</h3>
+        <p>Used when <code>TriggerType</code> is 12 (<code>CustomTriggerValue</code>):</p>
+        <table>
+            <tr>
+                <th>Value</th>
+                <th>Mode</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>0</td>
+                <td>OFF</td>
+                <td>No custom effect.</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Rigid</td>
+                <td>Fixed resistance.</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>Pulse</td>
+                <td>Pulsing resistance effect.</td>
+            </tr>
+        </table>
+
+        <h2>Editing the Configuration</h2>
+        <h3>Step 1: Open the File</h3>
+        <p>Navigate to <code>./Data/F4SE/Plugins/DSXFallout4Config.json</code> and open it in a text editor.</p>
+
+        <h3>Step 2: Modify Existing Entries</h3>
+        <p>Find the entry you want to change and adjust fields like <code>TriggerType</code>, <code>TriggerParams</code>, or <code>RGBUpdate</code>. Example: Change "Bow Fire" to use a harder resistance:</p>
+        <pre><code>Original:
+{
+    "TriggerParams": [0, 8, 4, 8],
+    "TriggerSide": 2,
+    "TriggerThreshold": 80,
+    "TriggerType": 14
+}
+Modified:
+{
+    "TriggerParams": [0, 0, 0, 0],
+    "TriggerSide": 2,
+    "TriggerThreshold": 0,
+    "TriggerType": 5
+}</code></pre>
+
+        <h3>Step 3: Save and Test</h3>
+        <p>Save the file and launch Fallout 4 with F4SE to test the modified weapon in-game.</p>
+
+        <h2>Adding Custom Weapons/Triggers</h2>
+        <h3>Step 1: Find the FormID</h3>
+        <p>In-game, open the console (<code>~</code> key), click the weapon, and note the FormID (e.g., "090391B4"). Alternatively, use xEdit.</p>
+
+        <h3>Step 2: Create New Entries</h3>
+        <p>Add two new objects for left and right triggers. Example: Adding a custom "Plasma Rifle" with FormID "001F22D":</p>
+        <pre><code>[
+    {
+        "Category": "Gun_Regular",
+        "CustomFormID": "001F22D",
+        "ControllerIndex": 0,
+        "Description": "Custom Plasma Rifle aiming",
+        "MicLEDMode": 2,
+        "Name": "Custom Plasma Rifle Aim",
+        "PlayerLED": [false, false, false, false, false],
+        "RGBUpdate": [0, 255, 0],
+        "TriggerParams": [0, 1, 0, 0],
+        "TriggerSide": 1,
+        "TriggerThreshold": 25,
+        "TriggerType": 13,
+        "customTriggerMode": 0,
+        "playerLEDNewRev": 5
+    },
+    {
+        "Category": "Gun_Regular",
+        "CustomFormID": "001F22D",
+        "ControllerIndex": 0,
+        "Description": "Custom Plasma Rifle firing",
+        "MicLEDMode": 2,
+        "Name": "Custom Plasma Rifle Fire",
+        "PlayerLED": [false, false, false, false, false],
+        "RGBUpdate": [0, 255, 0],
+        "TriggerParams": [0, 0, 0, 0],
+        "TriggerSide": 2,
+        "TriggerThreshold": 60,
+        "TriggerType": 3,
+        "customTriggerMode": 0,
+        "playerLEDNewRev": 5
+    }
+]</code></pre>
+
+        <h3>Step 3: Insert into JSON</h3>
+        <p>Append these entries to the end of the array, ensuring proper JSON syntax.</p>
+
+        <h3>Step 4: Save and Test</h3>
+        <p>Save and equip the custom weapon in-game to verify the triggers.</p>
+
+        <h2>Tips and Best Practices</h2>
+        <ul>
+            <li><strong>Backup</strong>: Always back up <code>DSXFallout4Config.json</code> before editing.</li>
+            <li><strong>Validation</strong>: Use a JSON validator to check syntax.</li>
+            <li><strong>TriggerParams</strong>: Experiment with values to fine-tune feedback.</li>
+            <li><strong>Custom Weapons</strong>: Ensure the FormID matches exactly (hexadecimal).</li>
+        </ul>
+
+        <h2>Troubleshooting</h2>
+        <ul>
+            <li><strong>Triggers Not Working</strong>: Check FormID, <code>TriggerSide</code>, and F4SE loading.</li>
+            <li><strong>JSON Errors</strong>: Verify syntax and check logs in <code>DSXFallout4.log</code>.</li>
+            <li><strong>No Feedback</strong>: Ensure the DualSense controller and DSX software are active.</li>
+        </ul>
+
+        <h2>Conclusion</h2>
+        <p>By editing <code>DSXFallout4Config.json</code>, you can tailor the DualSense controller's adaptive triggers to your preferred Fallout 4 gameplay style. Adding custom weapons enhances immersion with modded content.</p>
+    </div>
+</body>
+</html>
